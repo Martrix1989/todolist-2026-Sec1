@@ -18,7 +18,7 @@ const TodoList = () => {
         if (tarea === '') return
         setTodos((prevTodos) => {
             const nuevaTarea = {
-                id: uuidv4,
+                id: uuidv4(),
                 tarea: tarea,
                 estado: false
             }
@@ -45,6 +45,27 @@ const TodoList = () => {
         setTodos(newTodos)
     }
 
+    /* resumen de tareas */
+    const ContarTareas = () => {
+        return todos.filter((todo) => !todo.estado).length
+    }
+
+    const ResumenTareas = () => {
+        const cantida = ContarTareas()
+        if (cantida === 0) {
+            return (
+                <div className="alert alert-success" role="alert">
+                    No hay tareas pendientes 😎
+                </div>
+            )
+        }
+        return (
+            <div className="alert alert-info" role="alert">
+                Tienes {cantida} tareas pendientes 😊
+            </div>
+        )
+    }
+
     return (
         <Fragment>
             <h1 className="display-5 my-3"> Lista de tareas 😎✔️ </h1>
@@ -60,7 +81,7 @@ const TodoList = () => {
                 <button className="btn btn-primary ms-2" onClick={agregarTarea}>
                     <i class="bi bi-plus-circle-fill"></i>
                 </button>
-                <button className="btn btn-danger ms-2">
+                <button className="btn btn-danger ms-2" onClick={eliminarTarea}>
                     <i class="bi bi-trash-fill"></i>
                 </button>
 
@@ -71,6 +92,7 @@ const TodoList = () => {
                     <TodoItem
                         key={todo.id}
                         todo={todo}
+                        cambiarEstado={cambiarEstado}
                     />
                 ))}
             </ul>
