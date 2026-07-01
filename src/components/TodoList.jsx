@@ -26,7 +26,24 @@ const TodoList = () => {
         })
         tareaRef.current.value = null
     }
-    
+
+    /* eliminar tarea */
+    const eliminarTarea = (id) => {
+        const tareas = todos.filter((todo) => !todo.estado)
+        setTodos(tareas)
+    }
+
+    /* cambiar estado de tarea */
+    const cambiarEstado = (id) => {
+        /* obtener todas las tareas del array */
+        const newTodos = [...todos]
+        /* buscar la tarea que se quiere cambiar de estado */
+        const todo = newTodos.find((todo) => todo.id === id)
+        /* cambiar el estado de la tarea */
+        todo.estado = !todo.estado
+        /* actualizar el estado del componente */
+        setTodos(newTodos)
+    }
 
     return (
         <Fragment>
